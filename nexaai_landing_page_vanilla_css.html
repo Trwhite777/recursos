@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexaAI - AI Business Automation</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* =========================================
+           VARIABLES & RESETS
+           ========================================= */
+        :root {
+            --bg-main: #050505;
+            --bg-card: #0c0c0c;
+            --bg-card-hover: #111111;
+            --border-light: #1f1f1f;
+            --border-hover: #333333;
+            
+            --purple-primary: #9333ea;
+            --purple-hover: #a855f7;
+            --purple-glow: rgba(147, 51, 234, 0.4);
+            
+            --text-white: #ffffff;
+            --text-gray: #9ca3af;
+            --text-dark-gray: #6b7280;
+            
+            --font-main: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-main);
+            color: var(--text-gray);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* =========================================
+           GLOBAL COMPONENTS
+           ========================================= */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--purple-primary);
+            color: var(--text-white);
+            border: none;
+            box-shadow: 0 0 15px var(--purple-glow);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--purple-hover);
+            box-shadow: 0 0 25px var(--purple-glow);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-white);
+            border: 1px solid var(--border-light);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255,255,255,0.05);
+            border-color: var(--border-hover);
+        }
+
+        .section-title {
+            color: var(--text-white);
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto 48px;
+        }
+
+        .text-center { text-align: center; }
+
+        /* =========================================
+           1. NAVBAR
+           ========================================= */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background-color: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .container {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-white);
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--text-white);
+            color: var(--bg-main);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-white);
+        }
+
+        /* =========================================
+           2. HERO SECTION
+           ========================================= */
+        .hero {
+            padding: 180px 0 100px;
+            position: relative;
+            text-align: center;
+        }
+
+        .hero-glow {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(circle, var(--purple-primary) 0%, transparent 70%);
+            opacity: 0.15;
+            filter: blur(80px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            color: var(--text-white);
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #c084fc, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        /* =========================================
+           3. LOGOS (TRUSTED BY)
+           ========================================= */
+        .logos-section {
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .logos-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-dark-gray);
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        .logos-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 48px;
+        }
+
+        .logos-grid span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-white);
+            opacity: 0.4;
+            filter: grayscale(100%);
+            transition: all 0.3s ease;
+        }
+
+        .logos-grid span:hover {
+            opacity: 1;
+            filter: grayscale(0%);
+        }
+
+        /* =========================================
+           4. FEATURES
+           ========================================= */
+        .features {
+            padding: 100px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(147, 51, 234, 0.5);
+            background-color: var(--bg-card-hover);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background-color: var(--border-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--text-white);
+            margin-bottom: 24px;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover .feature-icon {
+            background-color: rgba(147, 51, 234, 0.2);
+            color: #c084fc;
+        }
+
+        .feature-card h3 {
+            color: var(--text-white);
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            font-size: 0.875rem;
+        }
+
+        /* =========================================
+           5. PRICING
+           ========================================= */
+        .pricing {
+            padding: 100px 0;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            align-items: center;
+        }
+
+        .pricing-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 40px 32px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .pricing-card.highlight {
+            border-color: var(--purple-primary);
+            box-shadow: 0 0 40px rgba(147, 51, 234, 0.1);
+            transform: scale(1.05);
+            background: linear-gradient(180deg, rgba(20,20,25,1) 0%, rgba(12,12,12,1) 100%);
+            z-index: 10;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--purple-primary);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .plan-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-white);
+            margin-bottom: 16px;
+        }
+        
+        .pricing-card.highlight .plan-name {
+            color: var(--purple-hover);
+        }
+
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-white);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+
+        .plan-price span {
+            font-size: 0.875rem;
+            color: var(--text-dark-gray);
+            font-weight: 400;
+        }
+
+        .plan-desc {
+            font-size: 0.875rem;
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .plan-features {
+            flex-grow: 1;
+            margin-bottom: 32px;
+        }
+
+        .plan-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.875rem;
+            margin-bottom: 16px;
+            color: var(--text-white);
+        }
+
+        .plan-features li i {
+            color: var(--purple-primary);
+            font-weight: bold;
+        }
+
+        .pricing-card .btn {
+            width: 100%;
+        }
+
+        /* =========================================
+           6. TESTIMONIALS
+           ========================================= */
+        .testimonials {
+            padding: 100px 0;
+            background-color: rgba(10, 10, 10, 0.5);
+            border-top: 1px solid var(--border-light);
+        }
+
+        .testi-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .testi-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 32px;
+        }
+
+        .testi-quote {
+            font-size: 1rem;
+            color: var(--text-white);
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+
+        .testi-author {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .testi-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--border-light);
+            object-fit: cover;
+        }
+
+        .testi-info h4 {
+            color: var(--text-white);
+            font-size: 0.875rem;
+            margin-bottom: 2px;
+        }
+
+        .testi-info p {
+            font-size: 0.75rem;
+            color: var(--text-dark-gray);
+        }
+
+        /* =========================================
+           7. FAQ
+           ========================================= */
+        .faq {
+            padding: 100px 0;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .faq-layout {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 64px;
+        }
+
+        .faq-left h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-white);
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .faq-left p {
+            margin-bottom: 24px;
+        }
+
+        .faq-item {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .faq-item:hover {
+            border-color: var(--border-hover);
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-white);
+            font-weight: 500;
+        }
+
+        .faq-question i {
+            color: var(--text-dark-gray);
+        }
+
+        .faq-answer {
+            margin-top: 16px;
+            font-size: 0.875rem;
+            display: none; /* Hidden by default in static layout */
+        }
+        
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+        
+        .faq-item.active .faq-question i {
+            color: var(--purple-primary);
+            transform: rotate(180deg);
+        }
+
+        /* =========================================
+           8. FOOTER
+           ========================================= */
+        .footer {
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 64px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-brand p {
+            margin-top: 16px;
+            font-size: 0.875rem;
+            max-width: 250px;
+        }
+
+        .footer-title {
+            color: var(--text-white);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            font-size: 0.875rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--purple-primary);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-light);
+            font-size: 0.75rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .giant-text {
+            position: absolute;
+            bottom: -5%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 18vw;
+            font-weight: 900;
+            color: var(--text-white);
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        /* =========================================
+           RESPONSIVE DESIGN (MEDIA QUERIES)
+           ========================================= */
+        @media (max-width: 992px) {
+            .features-grid, .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+            .pricing-card.highlight { transform: scale(1); }
+            .faq-layout { grid-template-columns: 1fr; gap: 32px; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 3rem; }
+            .hero-buttons { flex-direction: column; }
+            .features-grid, .pricing-grid, .testi-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .giant-text { font-size: 25vw; bottom: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Navbar -->
+    <header class="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <div class="logo-icon"><i class="ph-bold ph-planet"></i></div>
+                NexaAI
+            </a>
+            <nav class="nav-links">
+                <a href="#">Products</a>
+                <a href="#">Solutions</a>
+                <a href="#">Resources</a>
+                <a href="#">Pricing</a>
+            </nav>
+            <div style="display: flex; gap: 16px; align-items: center;">
+                <a href="#" style="font-size: 0.875rem; font-weight: 500; color: white;" class="hide-mobile">Log in</a>
+                <a href="#" class="btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 2. Hero Section -->
+        <section class="hero">
+            <div class="hero-glow"></div>
+            <div class="container">
+                <h1>Supercharge Your <br> Business with <span class="text-gradient">Smart AI</span></h1>
+                <p>Empower your workforce with advanced, data-driven insights. Our all-in-one AI automation platform streamlines workflows and accelerates growth.</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary">Get Started Free</a>
+                    <a href="#" class="btn btn-outline"><i class="ph-bold ph-phone-call"></i> Book a Call</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Trusted By Logos -->
+        <section class="logos-section">
+            <div class="container">
+                <h4 class="logos-title">Trusted By Innovative Companies Worldwide</h4>
+                <div class="logos-grid">
+                    <span><i class="ph-fill ph-amazon-logo"></i> amazon</span>
+                    <span><i class="ph-fill ph-stripe-logo"></i> stripe</span>
+                    <span><i class="ph-fill ph-paypal-logo"></i> PayPal</span>
+                    <span><i class="ph-fill ph-microsoft-logo"></i> Microsoft</span>
+                    <span><i class="ph-fill ph-linkedin-logo"></i> LinkedIn</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Features Grid -->
+        <section class="features">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-title">AI Powered Solutions for<br>Accelerated Growth</h2>
+                    <p class="section-subtitle">Discover a comprehensive suite of tools designed to automate tasks, generate insights, and scale your operations effortlessly.</p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="ph ph-brain"></i></div>
+                        <h3>Smart Automation</h3>
+                        <p>Automate repetitive workflows with intelligent agents that learn and adapt to your business processes.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="ph ph-chart-line-up"></i></div>
+                        <h3>Predictive Analytics</h3>
+                        <p>Forecast trends and make data-driven decisions with high accuracy using our proprietary ML models.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="ph ph-chat-teardrop-text"></i></div>
+                        <h3>Conversational AI</h3>
+                        <p>Deploy intelligent chatbots that understand context and resolve customer inquiries instantly.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="ph ph-shield-check"></i></div>
+                        <h3>Secure Data Lake</h3>
+                        <p>Enterprise-grade security protocols ensuring your sensitive data remains protected and compliant.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="ph ph-plugs-connected"></i></div>
+                        <h3>Seamless Integrations</h3>
+                        <p>Connect NexaAI with your existing tech stack including CRM, ERP, and communication tools.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="ph ph-users-three"></i></div>
+                        <h3>Team Collaboration</h3>
+                        <p>Shared workspaces for teams to interact with AI models, share insights, and manage projects.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Pricing -->
+        <section class="pricing">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-title">Flexible Pricing for<br>Every Growth Stage</h2>
+                    <p class="section-subtitle">No hidden fees. Cancel anytime. Scale as you grow.</p>
+                </div>
+
+                <div class="pricing-grid">
+                    <!-- Basic -->
+                    <div class="pricing-card">
+                        <h4 class="plan-name">Starter</h4>
+                        <div class="plan-price">$29<span>/mo</span></div>
+                        <p class="plan-desc">Ideal for individuals and small teams starting with AI.</p>
+                        <ul class="plan-features">
+                            <li><i class="ph-bold ph-check"></i> Up to 5 Projects</li>
+                            <li><i class="ph-bold ph-check"></i> Basic Analytics</li>
+                            <li><i class="ph-bold ph-check"></i> 24h Support Response</li>
+                        </ul>
+                        <a href="#" class="btn btn-outline">Choose Starter</a>
+                    </div>
+
+                    <!-- Pro (Highlighted) -->
+                    <div class="pricing-card highlight">
+                        <div class="popular-badge">Most Popular</div>
+                        <h4 class="plan-name">Professional</h4>
+                        <div class="plan-price">$79<span>/mo</span></div>
+                        <p class="plan-desc">Perfect for growing businesses needing advanced AI tools.</p>
+                        <ul class="plan-features">
+                            <li><i class="ph-bold ph-check"></i> Unlimited Projects</li>
+                            <li><i class="ph-bold ph-check"></i> Predictive Analytics</li>
+                            <li><i class="ph-bold ph-check"></i> Custom AI Models</li>
+                            <li><i class="ph-bold ph-check"></i> 1h Support Response</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary">Get Started Pro</a>
+                    </div>
+
+                    <!-- Advanced -->
+                    <div class="pricing-card">
+                        <h4 class="plan-name">Enterprise</h4>
+                        <div class="plan-price">$199<span>/mo</span></div>
+                        <p class="plan-desc">Custom solutions for large organizations with complex needs.</p>
+                        <ul class="plan-features">
+                            <li><i class="ph-bold ph-check"></i> Everything in Pro</li>
+                            <li><i class="ph-bold ph-check"></i> Dedicated Manager</li>
+                            <li><i class="ph-bold ph-check"></i> SSO & Security</li>
+                        </ul>
+                        <a href="#" class="btn btn-outline">Contact Sales</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Testimonials -->
+        <section class="testimonials">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-title">Real Results from Clients</h2>
+                    <p class="section-subtitle">See what industry leaders are saying about NexaAI.</p>
+                </div>
+                
+                <div class="testi-grid">
+                    <div class="testi-card">
+                        <p class="testi-quote">"The platform completely revolutionized how we handle data. The security protocols allowed us to migrate seamlessly."</p>
+                        <div class="testi-author">
+                            <img src="https://placehold.co/100/333/fff?text=SL" alt="User" class="testi-img">
+                            <div class="testi-info">
+                                <h4>Sarah L.</h4>
+                                <p>CTO, TechCorp</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testi-card">
+                        <p class="testi-quote">"We used to spend days compiling reports. Now, predictive insights are available in real-time. It changed our strategy."</p>
+                        <div class="testi-author">
+                            <img src="https://placehold.co/100/333/fff?text=MR" alt="User" class="testi-img">
+                            <div class="testi-info">
+                                <h4>Mark R.</h4>
+                                <p>VP Ops, GlobalLogistics</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testi-card">
+                        <p class="testi-quote">"Integrating NexaAI with our CRM was flawless. Within weeks, our sales team saw a 20% increase in productivity."</p>
+                        <div class="testi-author">
+                            <img src="https://placehold.co/100/333/fff?text=JW" alt="User" class="testi-img">
+                            <div class="testi-info">
+                                <h4>Jessica W.</h4>
+                                <p>Sales Director, InnovateNow</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testi-card">
+                        <p class="testi-quote">"As a startup, finding a platform that scales with our rapid growth was crucial. NexaAI provided exactly that."</p>
+                        <div class="testi-author">
+                            <img src="https://placehold.co/100/333/fff?text=DT" alt="User" class="testi-img">
+                            <div class="testi-info">
+                                <h4>David T.</h4>
+                                <p>Founder, NextGen SaaS</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. FAQ -->
+        <section class="faq">
+            <div class="container faq-layout">
+                <div class="faq-left">
+                    <h2>Frequently<br>asked questions</h2>
+                    <p>Can't find the answer you're looking for? Reach out to our support team.</p>
+                    <a href="#" class="btn btn-primary">Contact Support</a>
+                </div>
+                
+                <div class="faq-right">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How secure is my data with NexaAI?</span>
+                            <i class="ph-bold ph-caret-down"></i>
+                        </div>
+                    </div>
+                    <div class="faq-item active">
+                        <div class="faq-question">
+                            <span>Can I integrate NexaAI with my software?</span>
+                            <i class="ph-bold ph-caret-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Yes, absolutely. NexaAI is built with flexibility in mind and offers robust APIs and pre-built connectors for popular tools like Salesforce, HubSpot, Slack, and numerous ERP systems.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What level of technical expertise is required?</span>
+                            <i class="ph-bold ph-caret-down"></i>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Do you offer custom model training?</span>
+                            <i class="ph-bold ph-caret-down"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 8. Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <div class="logo-icon"><i class="ph-bold ph-planet"></i></div>
+                        NexaAI
+                    </a>
+                    <p>Empowering businesses with intelligent automation and data-driven growth strategies.</p>
+                </div>
+                
+                <div>
+                    <h5 class="footer-title">Platform</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Changelog</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 class="footer-title">Company</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 class="footer-title">Legal</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Security</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 NexaAI Inc. All rights reserved.</p>
+                <div style="display:flex; gap:16px;">
+                    <a href="#">System Status</a>
+                    <a href="#">Trust Center</a>
+                </div>
+            </div>
+        </div>
+        <!-- Giant faded background text -->
+        <div class="giant-text">NexaAI</div>
+    </footer>
+
+</body>
+</html>
